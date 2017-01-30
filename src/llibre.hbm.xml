@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="llibre" table="llibre">
+        <meta attribute="class-description">
+            This class contains the employee detail.
+        </meta>
+        <id name="llibre_id" type="int" column="llibre_id">
+            <generator class="increment" />
+        </id>
+        <property name="titol" column="titol" type="string"/>
+        <property name="nombre_exemplars" column="nombre_exemplars" type="int"/>
+        <property name="editorial" column="editorial" type="string"/>
+        <property name="nombre_pagines" column="nombre_pagines" type="int"/>
+        <property name="any_edicio" column="any_edicio" type="int"/>
+    </class>
+</hibernate-mapping>

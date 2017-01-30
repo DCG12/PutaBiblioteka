@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="Prestec" table="PRESTEC">
+        <meta attribute="class-description">
+            This class contains the employee detail.
+        </meta>
+        <id name="id" type="int" column="id">
+            <generator class="increment" />
+        </id>
+        <property name="llibre_id" column="llibre_id" type="int"/>
+        <property name="soci_id" column="soci_id" type="int"/>
+        <property name="llibre" column="llibre" type="string"/>
+        <property name="soci" column="soci" type="string"/>
+        <property name="data_inici" column="data_inici" type="string"/>
+        <property name="data_final" column="last_name" type="string"/>
+
+    </class>
+</hibernate-mapping>
