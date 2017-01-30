@@ -23,8 +23,20 @@ public class ManageLlibre {
             throw new ExceptionInInitializerError(ex);
         }
 
-        listLlibre();
+        ManageLlibre ML = new ManageLlibre();
 
+        Integer  empID1 = ML.addSocis( "Cristian", "Ramirez", 21, "En casa de su suegros", 645217942);
+        Integer  empID2 = ML.addSocis( "Fabian", "Puig", 40, "Castellon", 611926452);
+        Integer  empID3 = ML.addSocis( "Marcos", "Canton", 33, "a unos 20 minutos del insti", 688214239);
+
+        /* List down all the employees */
+        ML.listSoci();
+/* Update employee's records */
+        // ME.updateEmployee(empID1, 5000);
+/* Delete an employee from the database */
+        //ME.deleteEmployee(empID2);
+/* List down new list of the employees */
+        ML.listSoci();
     }
 
     //Permite añadir un libro
@@ -81,12 +93,15 @@ public class ManageLlibre {
             for (Iterator iterator =
                  llibre.iterator(); iterator.hasNext();){
                 llibre libro = (llibre) iterator.next();
+
                 System.out.print("Id: " + libro.getLlibre_id());
                 System.out.print(" Titol: " + libro.getTitol());
                 System.out.print(" Editorial: " + libro.getEditorial());
                 System.out.print(" Any d'edició: " + libro.getAny_edicio());
                 System.out.print(" numero de pagines: " + libro.getNombre_pagines());
                 System.out.print(" numero d'exemplars: " + libro.getNombre_exemplars());
+                System.out.println("      ");
+                System.out.println("   -------------------------    ");
             }
             tx.commit();
         }catch (HibernateException e) {
@@ -129,6 +144,74 @@ public class ManageLlibre {
             tx = session.beginTransaction();
             llibre llibre = (llibre)session.get(llibre.class, llibre_id);
             session.delete(llibre);
+            tx.commit();
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        }finally {
+            session.close();
+        }
+    }
+
+    public static void añadirsoci() {
+
+        ManageLlibre ML = new ManageLlibre();
+
+        Scanner sc = new Scanner(System.in);
+        String nom, cognom, direccio;
+        int edat, telefon;
+
+        System.out.println("Sisplau introduiex les dades del nou soci");
+        System.out.println("Nom");
+        nom = sc.nextLine();
+        System.out.println("Cognom");
+        cognom = sc.nextLine();
+        System.out.println("Edat");
+        edat = sc.nextInt();
+        System.out.println("Direccio");
+        direccio = sc.nextLine();
+        System.out.println("Telefon");
+        telefon = sc.nextInt();
+
+
+        Integer sociID1 = ML.addSocis(nom, cognom, edat, direccio, telefon);
+
+    }
+
+    public Integer addSocis(String nom, String cognom, int edat, String direccio, int telefon){
+        Session session = factory.openSession();
+        Transaction tx = null;
+        Integer sociID = null;
+        try{
+            tx = session.beginTransaction();
+            Soci soci = new Soci(nom, cognom, edat, direccio, telefon);
+            sociID = (Integer) session.save(soci);
+            tx.commit();
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        }finally {
+            session.close();
+        }
+        return sociID;
+    }
+    /* Method to READ all the employees */
+    public void listSoci( ){
+        Session session = factory.openSession();
+        Transaction tx = null;
+        try{
+            tx = session.beginTransaction();
+            List socis = session.createQuery("FROM Soci").list();
+            for (Iterator iterator =
+                 socis.iterator(); iterator.hasNext();){
+                Soci soci = (Soci) iterator.next();
+                System.out.print(" Id: " + soci.getSoci_id());
+                System.out.print(" Nom: " + soci.getNom());
+                System.out.println(" Cognom: " + soci.getCognom());
+                System.out.print(" edat: " + soci.getEdat());
+                System.out.print(" direcció: " + soci.getDireccio());
+                System.out.println(" telefon: " + soci.getTelefon());
+            }
             tx.commit();
         }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
