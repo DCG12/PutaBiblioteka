@@ -10,9 +10,9 @@ public class Soci {
     private String direccio;
     private int telefon;
 
-    public Soci(String nom, String cognom, int edat, String direccio, int telefon){}
+    public Soci(){}
 
-    public Soci(int soci_id, String nom, String cognom, int edat, String direccio, int telefon) {
+    public Soci(String nom, String cognom, int edat, String direccio, int telefon) {
         this.soci_id = soci_id;
         this.nom = nom;
         this.cognom = cognom;

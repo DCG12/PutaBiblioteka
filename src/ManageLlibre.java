@@ -16,6 +16,9 @@ public class ManageLlibre {
     private static SessionFactory factory;
 
     public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
         try {
             factory = new Configuration().configure().buildSessionFactory();
         } catch (Throwable ex) {
@@ -25,18 +28,38 @@ public class ManageLlibre {
 
         ManageLlibre ML = new ManageLlibre();
 
+        int aux;
+        System.out.println("Dame una opcion");
+        aux = sc.nextInt();
+        switch (aux){
+            case 1:
+                ML.listLlibre();
+                break;
+            case 2:
+                ML.listSoci();
+                break;
+            case 3:
+                ML.añadirlibro();
+                break;
+            case 4:
+                ML.añadirsoci();
+                break;
+        }
+
+        /*
         Integer  empID1 = ML.addSocis( "Cristian", "Ramirez", 21, "En casa de su suegros", 645217942);
         Integer  empID2 = ML.addSocis( "Fabian", "Puig", 40, "Castellon", 611926452);
         Integer  empID3 = ML.addSocis( "Marcos", "Canton", 33, "a unos 20 minutos del insti", 688214239);
 
         /* List down all the employees */
-        ML.listSoci();
+
+
 /* Update employee's records */
         // ME.updateEmployee(empID1, 5000);
 /* Delete an employee from the database */
         //ME.deleteEmployee(empID2);
 /* List down new list of the employees */
-        ML.listSoci();
+
     }
 
     //Permite añadir un libro
@@ -162,13 +185,15 @@ public class ManageLlibre {
         int edat, telefon;
 
         System.out.println("Sisplau introduiex les dades del nou soci");
+
         System.out.println("Nom");
         nom = sc.nextLine();
         System.out.println("Cognom");
         cognom = sc.nextLine();
+
         System.out.println("Edat");
         edat = sc.nextInt();
-        System.out.println("Direccio");
+        System.out.println("Direccio\n");
         direccio = sc.nextLine();
         System.out.println("Telefon");
         telefon = sc.nextInt();
@@ -177,6 +202,7 @@ public class ManageLlibre {
         Integer sociID1 = ML.addSocis(nom, cognom, edat, direccio, telefon);
 
     }
+
 
     public Integer addSocis(String nom, String cognom, int edat, String direccio, int telefon){
         Session session = factory.openSession();
@@ -219,5 +245,49 @@ public class ManageLlibre {
         }finally {
             session.close();
         }
+    }
+
+    public static void añadirPrestec() {
+
+        ManageLlibre ML = new ManageLlibre();
+
+        Scanner sc = new Scanner(System.in);
+        String nom, cognom, direccio;
+        int edat, telefon;
+
+        System.out.println("Sisplau introduiex les dades del nou prestec");
+        System.out.println("id del soci que demana el prestec");
+        nom = sc.nextLine();
+        System.out.println("Nom del soci");
+        cognom = sc.nextLine();
+        System.out.println("id del llibre que vol agafar");
+        edat = sc.nextInt();
+        System.out.println("Nom del llibre");
+        direccio = sc.nextLine();
+        System.out.println("Telefon");
+        telefon = sc.nextInt();
+
+
+        Integer sociID1 = ML.addSocis(nom, cognom, edat, direccio, telefon);
+
+    }
+
+
+    public Integer addPrestec(String nom, String cognom, int edat, String direccio, int telefon){
+        Session session = factory.openSession();
+        Transaction tx = null;
+        Integer sociID = null;
+        try{
+            tx = session.beginTransaction();
+            Soci soci = new Soci(nom, cognom, edat, direccio, telefon);
+            sociID = (Integer) session.save(soci);
+            tx.commit();
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        }finally {
+            session.close();
+        }
+        return sociID;
     }
 }
