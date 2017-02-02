@@ -1,8 +1,9 @@
-import java.util.List;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Scanner;
-
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.*;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -10,12 +11,11 @@ import org.hibernate.Transaction;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-
 public class ManageLlibre {
 
     private static SessionFactory factory;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
 
         Scanner sc = new Scanner(System.in);
 
@@ -44,12 +44,12 @@ public class ManageLlibre {
             case 4:
                 ML.añadirsoci();
                 break;
+            case 5:
+                ML.añadirPrestec();
+                break;
         }
 
-        /*
-        Integer  empID1 = ML.addSocis( "Cristian", "Ramirez", 21, "En casa de su suegros", 645217942);
-        Integer  empID2 = ML.addSocis( "Fabian", "Puig", 40, "Castellon", 611926452);
-        Integer  empID3 = ML.addSocis( "Marcos", "Canton", 33, "a unos 20 minutos del insti", 688214239);
+
 
         /* List down all the employees */
 
@@ -184,17 +184,21 @@ public class ManageLlibre {
         String nom, cognom, direccio;
         int edat, telefon;
 
+        Integer  empID1 = ML.addSocis( "Cristian", "Ramirez", 21, "En casa de su suegros", 645217942);
+        Integer  empID2 = ML.addSocis( "Fabian", "Puig", 40, "Castellon", 611926452);
+        Integer  empID3 = ML.addSocis( "Marcos", "Canton", 33, "a unos 20 minutos del insti", 688214239);
+
+
         System.out.println("Sisplau introduiex les dades del nou soci");
 
         System.out.println("Nom");
         nom = sc.nextLine();
         System.out.println("Cognom");
         cognom = sc.nextLine();
-
+        System.out.println("Direccio");
+        direccio = sc.nextLine();
         System.out.println("Edat");
         edat = sc.nextInt();
-        System.out.println("Direccio\n");
-        direccio = sc.nextLine();
         System.out.println("Telefon");
         telefon = sc.nextInt();
 
@@ -247,40 +251,57 @@ public class ManageLlibre {
         }
     }
 
-    public static void añadirPrestec() {
+    public static void añadirPrestec() throws ParseException {
 
         ManageLlibre ML = new ManageLlibre();
 
         Scanner sc = new Scanner(System.in);
-        String nom, cognom, direccio;
-        int edat, telefon;
+        String llibre, soci, fecha_inici, fecha_fi;
+        int llibre_id, soci_id;
+        Date data_inici, data_final;
 
         System.out.println("Sisplau introduiex les dades del nou prestec");
-        System.out.println("id del soci que demana el prestec");
-        nom = sc.nextLine();
+
         System.out.println("Nom del soci");
-        cognom = sc.nextLine();
-        System.out.println("id del llibre que vol agafar");
-        edat = sc.nextInt();
+        soci = sc.nextLine();
+
         System.out.println("Nom del llibre");
-        direccio = sc.nextLine();
-        System.out.println("Telefon");
-        telefon = sc.nextInt();
+        llibre = sc.nextLine();
+
+        System.out.println("Data de inici de prestec  amb el format dd/MM/yyyy");
+        //fecha_inici = sc.nextLine();
+        Calendar calendario = GregorianCalendar.getInstance();
+        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
+        data_inici  = calendario.getTime();
+        System.out.println(data_inici);
+
+        System.out.println("Data de fi de prestec amb el format dd/MM/yyyy");
+        fecha_fi = sc.next();
 
 
-        Integer sociID1 = ML.addSocis(nom, cognom, edat, direccio, telefon);
+        data_final = dateFormat.parse(fecha_fi) ;
+
+        System.out.println("id del soci que demana el prestec");
+        soci_id = sc.nextInt();
+
+        System.out.println("id del llibre que vol agafar");
+        llibre_id = sc.nextInt();
+
+
+
+        Integer PrestecID1 = ML.addPrestec(llibre_id, soci_id, llibre, soci, data_inici, data_final);
 
     }
 
 
-    public Integer addPrestec(String nom, String cognom, int edat, String direccio, int telefon){
+    public Integer addPrestec(int llibre_id, int soci_id, String llibre, String soci, Date data_inici, Date data_final){
         Session session = factory.openSession();
         Transaction tx = null;
-        Integer sociID = null;
+        Integer PrestecID = null;
         try{
             tx = session.beginTransaction();
-            Soci soci = new Soci(nom, cognom, edat, direccio, telefon);
-            sociID = (Integer) session.save(soci);
+            Prestec prestec = new Prestec(llibre_id, soci_id, llibre, soci, data_inici, data_final);
+            PrestecID = (Integer) session.save(prestec);
             tx.commit();
         }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
@@ -288,6 +309,35 @@ public class ManageLlibre {
         }finally {
             session.close();
         }
-        return sociID;
+        return PrestecID;
     }
+
+    public void listPrestec( ){
+        Session session = factory.openSession();
+        Transaction tx = null;
+        try{
+            tx = session.beginTransaction();
+            List prestecs = session.createQuery("FROM Prestec").list();
+            for (Iterator iterator =
+                 prestecs.iterator(); iterator.hasNext();){
+                Prestec prestec = (Prestec) iterator.next();
+                System.out.print(" Id: " + prestec.getId());
+                System.out.print(" Llibre:" + prestec.getLlibre());
+                System.out.println(" Id del llibre:" + prestec.getLlibre_id());
+                System.out.print(" Nom del soci: " + prestec.getSoci());
+                System.out.print(" id del soci: " + prestec.getSoci_id());
+                System.out.println(" data d'inici: " + prestec.getData_inici());
+                System.out.print(" data final: " + prestec.getData_final());
+
+            }
+            tx.commit();
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        }finally {
+            session.close();
+        }
+    }
+
+
 }

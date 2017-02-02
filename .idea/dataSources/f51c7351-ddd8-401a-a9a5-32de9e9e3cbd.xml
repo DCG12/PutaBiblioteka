@@ -41,8 +41,8 @@
     <schema id="13" parent="1" name="public">
       <object-id>2200</object-id>
       <visible>1</visible>
-      <introspection-state-number>20873</introspection-state-number>
-      <introspection-timestamp>2017-01-30.17:26:54.640</introspection-timestamp>
+      <introspection-state-number>20892</introspection-state-number>
+      <introspection-timestamp>2017-02-01.20:08:55.667</introspection-timestamp>
     </schema>
     <schema id="14" parent="1" name="pg_catalog">
       <object-id>11</object-id>
@@ -68,12 +68,12 @@
       <state-number>20861</state-number>
     </table>
     <table id="21" parent="13" name="prestec">
-      <object-id>81937</object-id>
-      <state-number>20865</state-number>
+      <object-id>90122</object-id>
+      <state-number>20892</state-number>
     </table>
     <table id="22" parent="13" name="soci">
-      <object-id>81968</object-id>
-      <state-number>20873</state-number>
+      <object-id>90112</object-id>
+      <state-number>20891</state-number>
     </table>
     <column id="23" parent="20" name="llibre_id">
       <state-number>20861</state-number>
@@ -116,89 +116,87 @@
       <primary>1</primary>
     </key>
     <column id="31" parent="21" name="id">
-      <state-number>20865</state-number>
+      <state-number>20892</state-number>
       <mandatory>1</mandatory>
       <data-type>integer|0</data-type>
       <default-expression>nextval(&apos;serial&apos;::regclass)</default-expression>
     </column>
     <column id="32" parent="21" name="llibre_id">
-      <state-number>20865</state-number>
+      <state-number>20892</state-number>
       <data-type>integer|0</data-type>
     </column>
     <column id="33" parent="21" name="soci_id">
-      <state-number>20865</state-number>
+      <state-number>20892</state-number>
       <data-type>integer|0</data-type>
     </column>
     <column id="34" parent="21" name="soci">
-      <state-number>20865</state-number>
+      <state-number>20892</state-number>
       <data-type>varchar(50)|0</data-type>
       <default-expression>NULL::character varying</default-expression>
     </column>
     <column id="35" parent="21" name="llibre">
-      <state-number>20865</state-number>
+      <state-number>20892</state-number>
       <data-type>varchar(50)|0</data-type>
       <default-expression>NULL::character varying</default-expression>
     </column>
     <column id="36" parent="21" name="data_inici">
-      <state-number>20865</state-number>
-      <data-type>varchar(50)|0</data-type>
-      <default-expression>NULL::character varying</default-expression>
+      <state-number>20892</state-number>
+      <data-type>date|0</data-type>
     </column>
     <column id="37" parent="21" name="data_final">
-      <state-number>20865</state-number>
-      <data-type>varchar(50)|0</data-type>
-      <default-expression>NULL::character varying</default-expression>
+      <state-number>20892</state-number>
+      <data-type>date|0</data-type>
     </column>
     <index id="38" parent="21" name="prestec_pkey">
-      <object-id>81945</object-id>
+      <object-id>90128</object-id>
       <columns>id</columns>
       <desc-columns></desc-columns>
       <unique>1</unique>
     </index>
     <key id="39" parent="21" name="prestec_pkey">
-      <object-id>81946</object-id>
+      <object-id>90129</object-id>
       <columns>id</columns>
       <underlying-index>prestec_pkey</underlying-index>
       <primary>1</primary>
     </key>
     <column id="40" parent="22" name="soci_id">
-      <state-number>20873</state-number>
+      <state-number>20891</state-number>
       <mandatory>1</mandatory>
       <data-type>integer|0</data-type>
       <default-expression>nextval(&apos;serial&apos;::regclass)</default-expression>
     </column>
     <column id="41" parent="22" name="nom">
-      <state-number>20873</state-number>
+      <state-number>20891</state-number>
       <data-type>varchar(50)|0</data-type>
       <default-expression>NULL::character varying</default-expression>
     </column>
     <column id="42" parent="22" name="cognom">
-      <state-number>20873</state-number>
+      <state-number>20891</state-number>
       <data-type>varchar(50)|0</data-type>
       <default-expression>NULL::character varying</default-expression>
     </column>
     <column id="43" parent="22" name="edat">
-      <state-number>20873</state-number>
+      <state-number>20891</state-number>
       <data-type>integer|0</data-type>
     </column>
     <column id="44" parent="22" name="direccio">
-      <state-number>20873</state-number>
+      <state-number>20891</state-number>
       <data-type>varchar(50)|0</data-type>
       <default-expression>NULL::character varying</default-expression>
     </column>
     <column id="45" parent="22" name="telefon">
-      <state-number>20873</state-number>
+      <state-number>20891</state-number>
       <data-type>varchar(50)|0</data-type>
       <default-expression>NULL::character varying</default-expression>
     </column>
     <index id="46" parent="22" name="soci_pkey">
-      <object-id>81976</object-id>
+      <object-id>90120</object-id>
       <columns>soci_id</columns>
       <desc-columns></desc-columns>
       <unique>1</unique>
     </index>
     <key id="47" parent="22" name="soci_pkey">
-      <object-id>81977</object-id>
+      <object-id>90121</object-id>
       <columns>soci_id</columns>
       <underlying-index>soci_pkey</underlying-index>
       <primary>1</primary>

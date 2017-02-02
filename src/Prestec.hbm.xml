@@ -14,8 +14,8 @@
         <property name="soci_id" column="soci_id" type="int"/>
         <property name="llibre" column="llibre" type="string"/>
         <property name="soci" column="soci" type="string"/>
-        <property name="data_inici" column="data_inici" type="string"/>
-        <property name="data_final" column="last_name" type="string"/>
+        <property name="data_inici" column="data_inici" type="date"/>
+        <property name="data_final" column="data_final" type="date"/>
 
     </class>
 </hibernate-mapping>

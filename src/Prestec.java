@@ -1,3 +1,5 @@
+import java.util.Date;
+
 /**
  * Created by 46406163y on 30/01/17.
  */
@@ -8,12 +10,12 @@ public class Prestec {
     private int soci_id;
     private String llibre;
     private String soci;
-    private String data_inici;
-    private String data_final;
+    private Date data_inici;
+    private Date data_final;
 
     public Prestec() {}
 
-    public Prestec(int id, int llibre_id, int soci_id, String llibre, String soci, String data_inici, String data_final) {
+    public Prestec(int llibre_id, int soci_id, String llibre, String soci, Date data_inici, Date data_final) {
         this.id = id;
         this.llibre_id = llibre_id;
         this.soci_id = soci_id;
@@ -22,6 +24,8 @@ public class Prestec {
         this.data_inici = data_inici;
         this.data_final = data_final;
     }
+
+
 
     public int getId() {
         return id;
@@ -63,19 +67,19 @@ public class Prestec {
         this.soci = soci;
     }
 
-    public String getData_inici() {
+    public Date getData_inici() {
         return data_inici;
     }
 
-    public void setData_inici(String data_inici) {
+    public void setData_inici(Date data_inici) {
         this.data_inici = data_inici;
     }
 
-    public String getData_final() {
+    public Date getData_final() {
         return data_final;
     }
 
-    public void setData_final(String data_final) {
+    public void setData_final(Date data_final) {
         this.data_final = data_final;
     }
 }
